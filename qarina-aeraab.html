@@ -99,13 +99,14 @@ select.mini{font-family:inherit; font-size:13px; border-radius:8px; border:1px s
 #dictStat{font-size:13px; color:var(--bad); flex:1; min-width:120px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
 #src{width:100%; box-sizing:border-box; border:0; outline:none; resize:none; min-height:460px; overflow:hidden;
   background:transparent; color:var(--ink); padding:20px 22px;
-  font-family:"QNastaliq","Noto Nastaliq Urdu",serif; font-size:26px; line-height:2.5; direction:rtl;}
+  font-family:"QNastaliq","Noto Nastaliq Urdu",serif; font-size:28px; line-height:76px; direction:rtl;
+  display:block; margin:0; white-space:pre-wrap; overflow-wrap:anywhere;}
 #src::placeholder{color:var(--muted); opacity:.75;}
 #out{min-height:460px; padding:20px 22px; direction:rtl;
-  font-family:"QNastaliq","Noto Nastaliq Urdu",serif; font-size:28px; line-height:2.7; overflow-wrap:anywhere;}
-#out.naskh, #src.naskh{font-family:"QNaskh","Noto Naskh Arabic",serif; line-height:2.2;}
+  font-family:"QNastaliq","Noto Nastaliq Urdu",serif; font-size:28px; line-height:76px; overflow-wrap:anywhere; white-space:pre-wrap; box-sizing:border-box;}
+#out.naskh, #src.naskh{font-family:"QNaskh","Noto Naskh Arabic",serif; line-height:62px;}
 #out .hint{color:var(--muted); font-size:16px; font-family:"QNaskh","Noto Naskh Arabic",serif; line-height:2;}
-.w{border-radius:6px; padding:0 2px;}
+.w{border-radius:6px; padding:0;}
 .w.chg{ text-decoration:underline; text-decoration-color:var(--ok); text-decoration-thickness:2px; text-underline-offset:9px;}
 .w.learn{ text-decoration:underline dotted; text-decoration-color:var(--ok); text-decoration-thickness:2px; text-underline-offset:9px;}
 .w.amb{ background:var(--warn-wash); color:var(--warn); cursor:pointer;
@@ -167,7 +168,7 @@ body.kb-open #qwrap{padding-bottom:420px;}
 #kbBar .ttl{font-size:13px; color:var(--muted);}
 @media(max-width:700px){ .key{min-width:31px; height:40px; font-size:17px;} .key.sp{min-width:110px;} }
 /* دبا کر لکھنے والا تختہ — hold to type */
-#holdkb{position:fixed; z-index:300; background:var(--card); border:1.6px solid var(--accent); border-radius:14px;
+#holdkb{position:fixed; z-index:300; box-sizing:border-box; max-width:calc(100vw - 16px); max-height:calc(100vh - 16px); overflow:auto; background:var(--card); border:1.6px solid var(--accent); border-radius:14px;
   box-shadow:0 8px 34px rgba(0,0,0,.28); padding:8px 10px; display:none; direction:rtl; user-select:none;}
 .hkrow{display:flex; gap:4px; justify-content:center; margin-top:4px;}
 .hk{min-width:34px; height:37px; padding:0 4px; display:flex; align-items:center; justify-content:center;
@@ -467,9 +468,9 @@ const DICT = {
 
 /* ---------- helpers ---------- */
 const MARKS=/[ً-ٰٕ]/;
-const STRIP=/[ً-ٰٕـ]/g;
-const WORDCHAR=/[ء-ٰٕ-ۓەـ‌]/;
-const norm=s=>s.replace(/ي/g,"ی").replace(/ك/g,"ک").replace(/[أإٱ]/g,"ا").replace(/ۀ/g,"ۂ");
+const STRIP=/[ً-ٰٕـ\u200b\u200d-\u200f\u2060\ufeff\u061c]/g;
+const WORDCHAR=/[ء-ٰٕ-ۓەـ‌\u200b\u200d-\u200f\u2060\ufeff\u061c]/;
+const norm=s=>s.normalize("NFC").replace(/\u06d3/g,"\u0626\u06d2").replace(/\u06d2\u0654/g,"\u0626\u06d2").replace(/\u06cc\u0654/g,"\u0626").replace(/ي/g,"ی").replace(/ك/g,"ک").replace(/[أإٱ]/g,"ا").replace(/ۀ/g,"ۂ");
 const bare=s=>norm(s).replace(STRIP,"");
 let PDICT={};
 try{ PDICT=JSON.parse(localStorage.getItem("qarina-dict")||"{}")||{}; }catch(e){ PDICT={}; }
@@ -518,7 +519,7 @@ function analyze(text){
       const raw=text.slice(i,j), b=bare(raw);
       let t={type:"w", raw, bare:b, custom:null, idx:0};
       if(MARKS.test(raw)) t.kind="kept";
-      else if(PDICT[b]) { t.kind="learn"; t.marked=PDICT[b]; }
+      else if(PDICT[b] && bare(PDICT[b])===b) { t.kind="learn"; t.marked=PDICT[b]; }
       else if(AMBIG[b]) { t.kind="amb"; t.forms=AMBIG[b]; }
       else if(DICT[b]) { t.kind = DICT[b]===b ? "plain" : "chg"; t.marked=DICT[b]; }
       else if(PLAIN.has(b)) { t.kind="plain"; }
@@ -627,6 +628,7 @@ function openPop(n,anchor){
   h+='<div class="row"><label><input type="checkbox" id="popRem"'+(t.kind==="unk"?" checked":"")+'><span class="L-ur"> لغت میں یاد رکھیں </span><span class="L-en">Remember</span>'+(t.kind==="amb"?' (سوچ کر — یہ لفظ جگہ جگہ بدلتا ہے)':'')+'</label>'+
      '<button class="act" id="popPad" title="دبائے رکھیے — تختہ کھلے گا؛ حرف پر چھوڑیے / hold to type">⌨ دبا کر لکھیے</button>'+
      '<button class="act" id="popSpk" title="یہ لفظ سنیے / hear this word">🔊</button>'+
+     (PDICT[t.bare]?'<button class="act" id="popForget" title="یہ لفظ اپنی لغت سے نکال دیجیے / remove this word from your dictionary"><span class="L-ur">🗑 سکھایا ہوا ہٹائیں</span><span class="L-en">Forget</span></button>':'')+
      '<button class="act" id="popOk"><span class="L-ur">ٹھیک ہے</span><span class="L-en">Done</span></button></div>';
   pop.innerHTML=h;
   pop.style.display="block";
@@ -661,10 +663,22 @@ function openPop(n,anchor){
   pop.querySelector("#popPad").addEventListener("pointerdown",e=>{
     e.stopPropagation(); inp.focus(); kbT=inp; startHold(e);
   });
+  const fg=pop.querySelector("#popForget");
+  if(fg) fg.onclick=e=>{
+    e.stopPropagation();
+    const k=t.bare; delete PDICT[k]; savePD();
+    toks.forEach(x=>{ if(x.type==="w" && x.bare===k) x.custom=null; });
+    closePop(); reanalyzeKeepChoices(); render();
+    say("«"+k+"» آپ کی لغت سے ہٹا دیا");
+  };
   pop.querySelector("#popOk").onclick=()=>{
     const v=inp.value.trim();
     if(v){ t.custom=v;
-      if(pop.querySelector("#popRem").checked){ PDICT[t.bare]=v; savePD(); reanalyzeKeepChoices(); } }
+      if(pop.querySelector("#popRem").checked){
+        /* لغت میں صرف وہی جائے جس کے حروف وہی ہوں — ورنہ صرف اسی جگہ بدلے، لغت نہ بگڑے */
+        if(bare(v)===t.bare){ PDICT[t.bare]=v; savePD(); reanalyzeKeepChoices(); }
+        else say("حروف بدل گئے ہیں — صرف اسی جگہ بدلا، لغت میں نہیں رکھا");
+      } }
     /* بولنے کا روپ — بدلا ہو تو ہمیشہ کے لیے یاد */
     const sv=spIn.value.trim();
     if(sv && sv!==(v||finalOf(t))){ if(SPEAKDICT[t.bare]!==sv){ SPEAKDICT[t.bare]=sv; saveSpeak(); say("تلفظ یاد رکھ لیا — پردے پر "+t.bare+"، بولے گا "+sv); } }
@@ -697,7 +711,14 @@ function reanalyzeKeepChoices(){
 
 /* ---------- input ---------- */
 const topbarEl=document.getElementById("topbar");
-function setTopH(){ try{ document.documentElement.style.setProperty("--topH",(topbarEl.offsetHeight+2)+"px"); }catch(e){} }
+function eqCaps(){ try{
+  const caps=[...document.querySelectorAll("main.q > .pane > .cap")];
+  caps.forEach(c=>c.style.minHeight="");
+  if(caps.length===2 && Math.abs(caps[0].getBoundingClientRect().top-caps[1].getBoundingClientRect().top)<2){
+    const h=Math.max(caps[0].offsetHeight,caps[1].offsetHeight);
+    caps.forEach(c=>{ c.style.boxSizing="border-box"; c.style.minHeight=h+"px"; });
+  } }catch(e){} }
+function setTopH(){ try{ document.documentElement.style.setProperty("--topH",(topbarEl.offsetHeight+2)+"px"); }catch(e){} eqCaps(); }
 window.addEventListener("resize",setTopH); setTimeout(setTopH,50);
 function grow(){ src.style.height="auto"; src.style.height=Math.max(460, src.scrollHeight+4)+"px"; }
 let deb=null;
@@ -1027,16 +1048,26 @@ function buildHold(){
   holdkb.innerHTML=h;
 }
 buildHold();
-let holding=false, hotEl=null, lastPX=0, lastPY=0;
+let holding=false, hotEl=null, lastPX=0, lastPY=0, holdArm=true, holdAt={x:0,y:0};
 function setHot(el){ if(hotEl===el) return; if(hotEl) hotEl.classList.remove("hot"); hotEl=el; if(hotEl) hotEl.classList.add("hot"); }
 function startHold(e){
   if(e.preventDefault) e.preventDefault();
   holding=true; setHot(null);
   holdkb.style.display="block";
+  holdkb.style.left="0px"; holdkb.style.top="0px";
   const r=holdkb.getBoundingClientRect();
-  let left=Math.max(8, Math.min(e.clientX-r.width/2, innerWidth-r.width-8));
-  let top=e.clientY-r.height-20; if(top<8) top=Math.min(e.clientY+26, innerHeight-r.height-8);
+  const vw=document.documentElement.clientWidth||innerWidth, vh=innerHeight, G=22;
+  let left=Math.max(8, Math.min(e.clientX-r.width/2, vw-r.width-8));
+  const above=e.clientY-G-8, below=vh-e.clientY-G-8;
+  let top;
+  if(r.height<=above) top=e.clientY-G-r.height;          /* اوپر جگہ ہے — دبائی ہوئی جگہ کے عین اوپر */
+  else if(r.height<=below) top=e.clientY+G;               /* ورنہ عین نیچے */
+  else top = above>=below ? 8 : vh-r.height-8;            /* دونوں طرف تنگ — جدھر زیادہ جگہ */
+  top=Math.max(8, Math.min(top, vh-r.height-8));
   holdkb.style.left=left+"px"; holdkb.style.top=top+"px";
+  /* تختہ انگلی کے نیچے آ جائے تو جب تک انگلی نہ ہلے کوئی حرف نہ چنا جائے */
+  holdArm = !(e.clientY>=top && e.clientY<=top+r.height && e.clientX>=left && e.clientX<=left+r.width);
+  holdAt={x:e.clientX,y:e.clientY};
 }
 /* لفظ یا متن پر long-press */
 let lpTimer=null, lpStart=null, srcAnchor=null;
@@ -1068,6 +1099,7 @@ document.addEventListener("pointermove",e=>{
   if(!holding) return;
   /* دائیں panel میں hold کے دوران selection نہ گھسٹے */
   if(kbT===src && srcAnchor!=null){ try{ src.setSelectionRange(srcAnchor,srcAnchor); }catch(err){} }
+  if(!holdArm){ if(Math.abs(e.clientX-holdAt.x)>12 || Math.abs(e.clientY-holdAt.y)>12) holdArm=true; else { setHot(null); return; } }
   const el=document.elementFromPoint(e.clientX,e.clientY);
   setHot(el && el.classList && el.classList.contains("hk") ? el : null);
 });
