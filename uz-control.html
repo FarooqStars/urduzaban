@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>کنٹرول — اردو زبان اور واہ واہ! | UrduZaban Control</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%2314110c'/%3E%3Ctext%20x='32'%20y='46'%20font-size='40'%20text-anchor='middle'%20fill='%23d9a441'%20font-family='serif'%3E%D8%A7%D9%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap">
+<style>
+@font-face{font-family:"UZ Nastaliq";src:url("fonts/noto-nastaliq-urdu-400.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"UZ Naskh";src:url("fonts/noto-naskh-arabic-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"UZ Naskh";src:url("fonts/noto-naskh-arabic-700.woff2") format("woff2");font-weight:600 800;font-display:swap}
+:root{--paper:#faf6ed;--card:#fffdf8;--card2:#f4eddc;--ink:#251f14;--muted:#7c7060;--line:#e6ddc9;--accent:#a8731d;--accent-hi:#d9a441;--accent-ink:#fff8ec;--accent-soft:rgba(168,115,29,.08);--ok:#2e7d4f;--shadow:0 1px 2px rgba(60,45,20,.06),0 12px 36px rgba(60,45,20,.09);--nastaliq:"UZ Nastaliq","Noto Nastaliq Urdu",serif;--naskh:"UZ Naskh","Noto Naskh Arabic",serif;--latin-ui:"Segoe UI",system-ui,-apple-system,sans-serif}
+@media(prefers-color-scheme:dark){:root{--paper:#14110c;--card:#1e1912;--card2:#181410;--ink:#f0e8d8;--muted:#a89a82;--line:#382f21;--accent:#d9a441;--accent-hi:#f0c46a;--accent-ink:#241b0a;--accent-soft:rgba(217,164,65,.10);--ok:#6fbe8c;--shadow:0 1px 2px rgba(0,0,0,.35),0 12px 36px rgba(0,0,0,.42)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--naskh);font-size:16.5px;line-height:2.05}.L-en{display:none!important}body.en-mode .L-ur{display:none!important}body.en-mode .L-en{display:revert!important}body.en-mode{font-family:var(--latin-ui);direction:ltr;line-height:1.7}.always-ur{font-family:var(--nastaliq)!important;direction:rtl;unicode-bidi:isolate}
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}nav .in{max-width:1120px;margin:auto;padding:8px 20px;display:flex;align-items:center;gap:16px}.brand{font-family:var(--nastaliq);font-weight:700;font-size:19px;line-height:2;text-decoration:none;color:var(--ink);white-space:nowrap}.brand small{color:var(--accent);font-family:var(--latin-ui);font-size:10.5px;letter-spacing:1.2px;margin:0 6px}.navlinks{display:flex;gap:4px 16px;flex-wrap:wrap;margin:0 auto;font-size:14.5px}.navlinks a{color:var(--muted);text-decoration:none;padding:2px 4px}.navlinks a:hover,.navlinks a.on{color:var(--accent);font-weight:700}.langbtn{border:1.5px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;border-radius:999px;padding:4px 16px;font-size:14px;font-weight:700;font-family:var(--latin-ui);white-space:nowrap}@media(max-width:720px){nav .in{flex-wrap:wrap;padding:8px 12px}.navlinks{order:3;flex:1 0 100%;flex-wrap:nowrap;overflow-x:auto;gap:0 14px}.navlinks a{white-space:nowrap}}
+main{max-width:1120px;margin:auto;padding:34px 20px 80px}.hero{display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:center;background:linear-gradient(135deg,var(--card),var(--accent-soft));border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--shadow);overflow:hidden}.avatar{width:200px;height:200px;border-radius:50%;object-fit:cover;border:5px solid var(--card);box-shadow:0 14px 40px rgba(0,0,0,.18)}h1{font-family:var(--nastaliq);font-size:clamp(38px,6vw,64px);line-height:1.8;margin:0;color:var(--accent)}.lead{font-family:var(--nastaliq);font-size:clamp(19px,2.7vw,27px);line-height:2.15;margin:2px 0 8px}.sub{color:var(--muted);margin:0}.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.badge{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--muted)}.badge strong{color:var(--ink)}
+section{margin-top:34px}.title{font-family:var(--nastaliq);font-size:30px;line-height:2;margin:0 0 8px}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow)}.message{font-family:var(--nastaliq);font-size:20px;line-height:2.3}.quote{border-inline-start:4px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:14px;margin:16px 0;color:var(--ink)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px 18px;box-shadow:var(--shadow)}.card h3{margin:0 0 4px;font-family:var(--nastaliq);font-size:21px;line-height:2}.card p{margin:0;color:var(--muted);font-size:14.7px}.tags{display:flex;flex-wrap:wrap;gap:7px}.tag{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:4px 10px;font-family:var(--latin-ui);direction:ltr;font-size:12.5px}.links{display:flex;flex-wrap:wrap;gap:9px}.link{display:inline-flex;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 15px}.link:hover{color:var(--accent);border-color:var(--accent)}.open-call{background:linear-gradient(135deg,var(--accent-soft),var(--card));border:1.5px solid var(--accent);border-radius:22px;padding:22px 24px}.open-call h2{margin:0;font-family:var(--nastaliq);font-size:30px;line-height:2}.open-call p{margin:4px 0 0}.cta{display:inline-block;margin-top:15px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border-radius:999px;padding:10px 24px;font-weight:700}
+footer{border-top:2px solid var(--accent);background:var(--card);margin-top:50px}footer .in{max-width:1120px;margin:auto;padding:18px 20px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}footer a{color:var(--accent);text-decoration:none}@media(max-width:760px){.hero{grid-template-columns:1fr;text-align:center}.avatar{margin:auto;width:160px;height:160px}.badges{justify-content:center}.grid{grid-template-columns:1fr}}
+</style>
+<style>
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.row input,.row select{flex:1;min-width:180px}
+input,textarea,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);color:var(--ink);font:inherit;margin:4px 0}
+label{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:9px 22px;font-weight:700;cursor:pointer;margin-top:6px}
+.mini{border:1px solid var(--line);background:var(--card2);color:var(--ink);border-radius:999px;padding:2px 12px;cursor:pointer;margin:2px 4px;font-size:13px}
+.status{border-radius:14px;padding:10px 14px;margin-top:8px;font-weight:700}.status.idle{background:var(--card2);color:var(--muted)}.status.busy{background:#fff4d6;color:#7a5210}.status.ok{background:#dff3e6;color:#1d6b3e}.status.bad{background:#fbe1e1;color:#9b2c2c}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;position:sticky;top:58px;z-index:5;background:var(--paper);padding:6px 0}.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 16px;cursor:pointer;font:inherit}.tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab{display:none;margin-top:12px}.tab.on{display:block}.tab .panel{margin-bottom:12px}
+.grid4{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}.kpi small{color:var(--muted);display:block}.kpi b{font-size:24px;color:var(--accent);font-family:var(--latin-ui)}
+.bars{display:flex;align-items:flex-end;gap:3px;height:160px;direction:ltr}.bars .b{flex:1;max-width:34px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}.bars i{display:block;width:100%;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px}.bars span{font-size:10px;color:var(--muted);font-family:var(--latin-ui)}
+.sp{display:grid;grid-template-columns:110px 1fr auto;gap:8px;align-items:center;margin:4px 0}.sp i{display:block;height:8px;background:var(--accent-hi);border-radius:8px}
+.item{border-top:1px dashed var(--line);padding:6px 0}.item pre{white-space:pre-wrap;font-family:var(--naskh);margin:0;line-height:1.9}.item.gone{opacity:.5}.day.today{border:2px solid var(--accent)}
+iframe{width:100%;height:80vh;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.note{color:var(--muted);font-size:14px}
+</style>
+
+<link rel="stylesheet" href="uz-ui.css">
+</head>
+<body>
+<nav><div class="in">
+<a class="brand always-ur" href="index.html">اردو زبان<small>URDUZABAN.COM</small></a>
+<div class="navlinks"><a class="on" href="uz-control.html"><span class="L-ur">کنٹرول</span><span class="L-en">Control</span></a><a href="uz-admin.html"><span class="L-ur">پرانا ایڈمن</span><span class="L-en">Old admin</span></a><a href="wahwah/index.html">واہ واہ!</a></div>
+<button class="langbtn" id="langbtn">English</button>
+</div></nav>
+<main>
+<div class="panel" style="margin-bottom:14px">
+<h1 class="always-ur" style="font-size:40px;margin:0">کنٹرول</h1>
+<p class="L-ur">یہ ایک ہی ونڈو اردو زبان کی ویب سائٹ اور «واہ واہ!» ایپ دونوں کو چلاتی ہے۔ <b>کیوں:</b> ایپ کا روز کا مواد، اعلان اور اسٹور کے لنک یہیں سے بدلتے ہیں، اور روز کی رپورٹ یہیں ملتی ہے۔ <b>کب:</b> جب کوئی لطیفہ ہٹانا یا بدلنا ہو، نیا ڈالنا ہو، یا رپورٹ دیکھنی ہو۔ <b>کیسے:</b> نیچے چابی لکھیں (وہی جو پرانے ایڈمن کی ہے) اور «شروع کریں» دبائیں۔ ہر کام کے بعد نیچے سبز یا سرخ نشان آئے گا۔</p>
+<p class="L-en">One window runs both the UrduZaban website and the “Wah Wah!” app. <b>Why:</b> the app's daily content, notice and store links are changed here, and the daily report is here. <b>When:</b> to remove, change or add a joke or riddle, or to see the report. <b>How:</b> type the key below (the same as the old admin) and press “Start”. After every action a green or red sign appears below.</p>
+<div class="row"><input type="password" id="key" placeholder="admin key" dir="ltr"><button class="btn" id="start"><span class="L-ur">شروع کریں</span><span class="L-en">Start</span></button></div>
+<div id="status" class="status idle"><span class="L-ur">ابھی کچھ نہیں ہوا — چابی لکھ کر شروع کریں۔</span><span class="L-en">Nothing has happened yet — type the key and press Start.</span></div>
+</div>
+
+<div class="tabs" id="tabs">
+<button data-t="report" class="on"><span class="L-ur">رپورٹ</span><span class="L-en">Report</span></button>
+<button data-t="days"><span class="L-ur">روز کا مواد</span><span class="L-en">Daily content</span></button>
+<button data-t="pool"><span class="L-ur">لطیفے اور پہیلیاں</span><span class="L-en">Jokes and riddles</span></button>
+<button data-t="app"><span class="L-ur">ایپ کی ترتیبات</span><span class="L-en">App settings</span></button>
+<button data-t="site"><span class="L-ur">ویب سائٹ</span><span class="L-en">Website</span></button>
+<button data-t="log"><span class="L-ur">ریکارڈ</span><span class="L-en">Record</span></button>
+</div>
+
+<section class="tab on" id="t-report">
+<div class="grid4" id="kpis"></div>
+<div class="panel"><h3><span class="L-ur">روز کتنے فون آئے (آخری 30 دن)</span><span class="L-en">Phones per day (last 30 days)</span></h3><div id="bars" class="bars"></div>
+<p class="note"><span class="L-ur">صرف گنتی: ہر فون دن میں ایک بار گنا جاتا ہے۔ کوئی نام، آئی پی یا شناخت محفوظ نہیں ہوتی۔</span><span class="L-en">Counts only: each phone is counted once a day. No name, IP or identity is stored.</span></p></div>
+<div class="grid3"><div class="panel"><h3><span class="L-ur">فون</span><span class="L-en">Platform</span></h3><div id="split-p"></div></div>
+<div class="panel"><h3><span class="L-ur">ورژن</span><span class="L-en">Version</span></h3><div id="split-v"></div></div>
+<div class="panel"><h3><span class="L-ur">ایپ کی زبان</span><span class="L-en">App language</span></h3><div id="split-l"></div></div></div>
+<div class="panel"><h3><span class="L-ur">سرور کی حالت</span><span class="L-en">Server health</span></h3><div id="health"></div></div>
+</section>
+
+<section class="tab" id="t-days">
+<p class="note"><span class="L-ur">آج اور گزرا ہوا دن نہیں بدلتے (لوگ دیکھ چکے)۔ کسی لطیفے کو ہٹائیں گے تو کل سے آگے کا کیلنڈر خود دوبارہ بنے گا، 30 دن کے قاعدے کے ساتھ۔</span><span class="L-en">Today and past days never change (people have seen them). Removing a joke rebuilds the calendar from tomorrow, keeping the 30-day rule.</span></p>
+<div id="days"></div>
+</section>
+
+<section class="tab" id="t-pool">
+<div class="panel"><h3><span class="L-ur">نیا لطیفہ</span><span class="L-en">New joke</span></h3>
+<textarea id="newjoke" rows="4" dir="rtl"></textarea><button class="btn" id="addjoke"><span class="L-ur">لطیفہ ڈالیں</span><span class="L-en">Add joke</span></button></div>
+<div class="panel"><h3><span class="L-ur">نئی پہیلی</span><span class="L-en">New riddle</span></h3>
+<textarea id="newq" rows="2" dir="rtl" placeholder="پہیلی"></textarea><input id="newa" dir="rtl" placeholder="جواب"><input id="newh" dir="rtl" placeholder="اشارہ">
+<button class="btn" id="addriddle"><span class="L-ur">پہیلی ڈالیں</span><span class="L-en">Add riddle</span></button></div>
+<div class="row"><input id="q" dir="rtl" placeholder="تلاش / search"><select id="filter"><option value="all">all</option><option value="jokes">jokes</option><option value="riddles">riddles</option><option value="no">removed</option></select></div>
+<div id="pool"></div>
+</section>
+
+<section class="tab" id="t-app">
+<div class="panel">
+<h3><span class="L-ur">اسٹور کے لنک</span><span class="L-en">Store links</span></h3>
+<p class="note"><span class="L-ur">خالی ہو تو ایپ اور تصویروں پر «جلد آ رہا ہے» لکھا آتا ہے۔ لنک ڈالیں تو اصل لنک دکھے گا۔</span><span class="L-en">Empty = “coming soon” in the app and on share pictures. Add a link and the real link is shown.</span></p>
+<label>Google Play</label><input id="store_play" dir="ltr" placeholder="https://play.google.com/store/apps/details?id=...">
+<label>App Store</label><input id="store_apple" dir="ltr" placeholder="https://apps.apple.com/app/...">
+<h3><span class="L-ur">ایپ میں اعلان</span><span class="L-en">Notice in the app</span></h3>
+<label><span class="L-ur">اردو</span><span class="L-en">Urdu</span></label><input id="notice_ur" dir="rtl">
+<label>English</label><input id="notice_en" dir="ltr">
+<label><span class="L-ur">کب تک (تاریخ)</span><span class="L-en">Until (date)</span></label><input id="notice_until" type="date" dir="ltr">
+<button class="btn" id="savecfg"><span class="L-ur">محفوظ کریں</span><span class="L-en">Save</span></button>
+</div>
+</section>
+
+<section class="tab" id="t-site">
+<div class="panel"><p class="L-ur">ویب سائٹ کے پرانے اوزار (لغت کا تلفظ، درخواستیں) یہاں اسی ونڈو میں کھلتے ہیں۔ پرانا صفحہ بدلا نہیں گیا۔</p><p class="L-en">The website's existing tools (dictionary pronunciation, requests) open here in the same window. The old page is unchanged.</p>
+<div class="links"><a class="link" href="index.html" target="_blank">گھر</a><a class="link" href="lughat.html" target="_blank">لغت</a><a class="link" href="kahawat.html" target="_blank">کہاوت</a><a class="link" href="adab.html" target="_blank">ادب</a><a class="link" href="wahwah/index.html" target="_blank">واہ واہ!</a></div></div>
+<iframe id="siteframe" data-src="uz-admin.html" title="uz-admin"></iframe>
+</section>
+
+<section class="tab" id="t-log"><div class="panel"><div id="log"></div></div></section>
+</main>
+
+<footer><div class="in"><span>© 2026 UrduZaban · محمد فاروق</span><span dir="ltr">uz-control · api/wahwah.php · Nizam FA-004 / FA-022</span></div></footer>
+<script>
+(function(){var b=document.getElementById('langbtn');function set(l,save){var en=l==='en';document.body.classList.toggle('en-mode',en);document.documentElement.lang=en?'en':'ur';document.documentElement.dir=en?'ltr':'rtl';b.textContent=en?'اردو':'English';if(save)try{localStorage.setItem('uz-lang',l)}catch(e){}}b.addEventListener('click',function(){set(document.body.classList.contains('en-mode')?'ur':'en',true)});var s=null;try{s=localStorage.getItem('uz-lang')}catch(e){}if(s==='en')set('en',false)})();
+</script>
+<script>
+(function(){
+const API='api/wahwah.php'; const $=id=>document.getElementById(id);
+let KEY='', DATA=null, busyT=null;
+const en=()=>document.body.classList.contains('en-mode');
+const T=(u,e)=>en()?e:u;
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function status(kind,ur,enT){const s=$('status');clearInterval(busyT);s.className='status '+kind;
+  if(kind==='busy'){let n=0;const paint=()=>s.innerHTML='⏳ '+esc(T(ur,enT))+' — '+(n++)+'s';paint();busyT=setInterval(paint,1000);}
+  else s.innerHTML=(kind==='ok'?'🟢 ':kind==='bad'?'🔴 ':'')+esc(T(ur,enT));}
+async function post(params){const b=new FormData();b.append('key',KEY);for(const k in params)b.append(k,params[k]);
+  const r=await fetch(API,{method:'POST',body:b});let j={};try{j=await r.json()}catch(e){}return j;}
+async function act(params,urOk,enOk){status('busy','کام ہو رہا ہے','Working');
+  try{const j=await post(params);if(!j.ok)throw new Error(j.err||'error');await load(true);status('ok',urOk+' — اب آگے جو کرنا ہو کریں۔',enOk+' — you can carry on.');return j;}
+  catch(e){status('bad','نہیں ہوا ('+e.message+') — چابی یا انٹرنیٹ دیکھیں اور دوبارہ کوشش کریں۔','Not done ('+e.message+') — check the key or internet and try again.');}}
+async function load(quiet){if(!quiet)status('busy','سرور سے معلومات آ رہی ہیں','Loading from the server');
+  const j=await post({action:'overview'});
+  if(!j.ok){status('bad',j.err==='key'?'چابی غلط ہے — دوبارہ لکھیں۔':'سرور سے جواب نہیں آیا ('+(j.err||'?')+')۔',j.err==='key'?'Wrong key — type it again.':'No answer from the server ('+(j.err||'?')+').');return false;}
+  DATA=j;try{sessionStorage.setItem('uzk',KEY)}catch(e){}paintAll();if(!quiet)status('ok','سب کچھ آ گیا — اوپر کے خانوں میں جائیں۔','Everything loaded — use the tabs above.');return true;}
+function bar(obj){const tot=Object.values(obj).reduce((a,b)=>a+b,0)||1;return Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="sp"><span dir="ltr">${esc(k)}</span><i style="width:${Math.round(v*100/tot)}%"></i><b>${v}</b></div>`).join('')||'—';}
+function paintAll(){
+  const st=DATA.stats||{}; const days=Object.keys(st).sort().slice(-30);
+  const sum=(k)=>{const o={};days.forEach(d=>{for(const[a,b]of Object.entries(st[d][k]||{}))o[a]=(o[a]||0)+b});return o};
+  const today=st[DATA.today]?.n||0, week=days.slice(-7).reduce((a,d)=>a+st[d].n,0), month=days.reduce((a,d)=>a+st[d].n,0);
+  const act=(DATA.pool.jokes||[]).filter(x=>x.status!=='no').length, ar=(DATA.pool.riddles||[]).filter(x=>x.status!=='no').length;
+  $('kpis').innerHTML=[[T('آج','Today'),today],[T('7 دن','7 days'),week],[T('30 دن','30 days'),month],[T('لطیفے / پہیلیاں','Jokes / riddles'),act+' / '+ar],[T('کیلنڈر کہاں تک','Calendar until'),DATA.planned_until]].map(([a,b])=>`<div class="kpi"><small>${a}</small><b dir="ltr">${esc(b)}</b></div>`).join('');
+  const mx=Math.max(1,...days.map(d=>st[d].n));
+  $('bars').innerHTML=days.map(d=>`<div class="b" title="${d}: ${st[d].n}"><i style="height:${Math.round(st[d].n*100/mx)}%"></i><span>${d.slice(8)}</span></div>`).join('')||T('ابھی کوئی گنتی نہیں — نئی ایپ آنے پر شروع ہوگی۔','No counts yet — they start with the new app build.');
+  $('split-p').innerHTML=bar(sum('p'));$('split-v').innerHTML=bar(sum('v'));$('split-l').innerHTML=bar(sum('l'));
+  Promise.all([fetch(API+'?action=health').then(r=>r.json()).catch(()=>null),fetch('api/lexicon.php?action=health').then(r=>r.json()).catch(()=>null)]).then(([w,l])=>{
+    $('health').innerHTML=`<div class="sp"><span>wahwah.php</span><b>${w&&w.ok?'🟢':'🔴'} ${w?esc(w.store)+' · '+w.jokes+' / '+w.riddles:''}</b></div><div class="sp"><span>lexicon.php</span><b>${l&&l.ok?'🟢':'🔴'} ${l?esc(l.store):''}</b></div>`;});
+  $('days').innerHTML=DATA.days.map(d=>{const past=d.day<=DATA.today;return `<div class="panel day ${d.day===DATA.today?'today':''}"><h3 dir="ltr">${d.day} ${d.day===DATA.today?'· '+T('آج','today'):''}</h3>`+
+    d.jokes.map(j=>`<div class="item"><pre>${esc(j.text)}</pre>${past?'':`<button class="mini" data-rm="${j.id}">${T('ہٹائیں','Remove')}</button>`}<button class="mini" data-ed="${j.id}">${T('بدلیں','Edit')}</button></div>`).join('')+
+    (d.riddle?`<div class="item riddle"><pre>🧩 ${esc(d.riddle.q)}\n${T('جواب','Answer')}: ${esc(d.riddle.a)}</pre>${past?'':`<button class="mini" data-rm="${d.riddle.id}">${T('ہٹائیں','Remove')}</button>`}<button class="mini" data-ed="${d.riddle.id}">${T('بدلیں','Edit')}</button></div>`:'')+'</div>'}).join('');
+  paintPool();
+  const c=DATA.config||{};['store_play','store_apple','notice_ur','notice_en','notice_until'].forEach(k=>$(k).value=c[k]||'');
+  $('log').innerHTML=(DATA.log||[]).map(l=>`<div class="sp"><span dir="ltr">${esc(l.t)}</span><b dir="ltr">${esc(l.what)}</b></div>`).join('')||'—';
+}
+function paintPool(){const q=$('q').value.trim(), f=$('filter').value;
+  let items=[...(DATA.pool.jokes||[]).map(x=>({...x,k:'jokes'})),...(DATA.pool.riddles||[]).map(x=>({...x,k:'riddles'}))];
+  items=items.filter(x=>(f==='all'||x.k===f||(f==='no'&&x.status==='no'))&&(!q||JSON.stringify(x).includes(q)));
+  $('pool').innerHTML=items.slice(0,400).map(x=>`<div class="item ${x.status==='no'?'gone':''}"><small dir="ltr">${x.id} · ${x.status||'draft'}</small><pre>${esc(x.text||(x.q+'\n'+T('جواب','Answer')+': '+x.a+'\n'+T('اشارہ','Hint')+': '+(x.hint||'')))}</pre>`+
+    (x.status==='no'?`<button class="mini" data-rs="${x.id}">${T('واپس لائیں','Restore')}</button>`:`<button class="mini" data-rm="${x.id}">${T('ہٹائیں','Remove')}</button>`)+`<button class="mini" data-ed="${x.id}">${T('بدلیں','Edit')}</button></div>`).join('')+(items.length>400?'<p class="note">… '+items.length+'</p>':'');}
+function findItem(id){for(const k of['jokes','riddles'])for(const x of DATA.pool[k]||[])if(x.id===id)return[k,x];return[null,null];}
+document.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.rm){if(confirm(T('یہ کل سے کبھی نہیں دکھے گا۔ ہٹا دیں؟','It will never show from tomorrow. Remove?')))act({action:'remove',id:b.dataset.rm},'ہٹا دیا، کل سے کیلنڈر نیا بن گیا','Removed, calendar rebuilt from tomorrow');}
+  if(b.dataset.rs)act({action:'restore',id:b.dataset.rs},'واپس آ گیا','Restored');
+  if(b.dataset.ed){const[k,x]=findItem(b.dataset.ed);if(!k)return;
+    if(k==='jokes'){const t=prompt(T('لطیفہ بدلیں','Edit the joke'),x.text);if(t&&t.trim())act({action:'edit',id:x.id,text:t},'بدل دیا','Changed');}
+    else{const q=prompt(T('پہیلی','Riddle'),x.q);if(q===null)return;const a=prompt(T('جواب','Answer'),x.a);if(a===null)return;const h=prompt(T('اشارہ','Hint'),x.hint||'');act({action:'edit',id:x.id,q,a,hint:h||''},'بدل دیا','Changed');}}
+});
+$('start').onclick=async()=>{KEY=$('key').value.trim();if(!KEY){status('bad','پہلے چابی لکھیں۔','Type the key first.');return;}await load();};
+$('addjoke').onclick=()=>{const t=$('newjoke').value.trim();if(!t)return status('bad','لطیفہ خالی ہے۔','The joke is empty.');act({action:'add',type:'joke',text:t},'نیا لطیفہ آ گیا؛ کیلنڈر میں اگلی بار بنتے وقت شامل ہوگا','New joke added; it joins the calendar when it is next built').then(j=>{if(j)$('newjoke').value='';});};
+$('addriddle').onclick=()=>{const q=$('newq').value.trim(),a=$('newa').value.trim();if(!q||!a)return status('bad','پہیلی اور جواب دونوں لکھیں۔','Write both the riddle and the answer.');act({action:'add',type:'riddle',q,a,hint:$('newh').value.trim()},'نئی پہیلی آ گئی','New riddle added').then(j=>{if(j){$('newq').value='';$('newa').value='';$('newh').value='';}});};
+$('savecfg').onclick=()=>act({action:'config_save',store_play:$('store_play').value.trim(),store_apple:$('store_apple').value.trim(),notice_ur:$('notice_ur').value.trim(),notice_en:$('notice_en').value.trim(),notice_until:$('notice_until').value},'ترتیبات محفوظ؛ ایپ اگلی بار کھلنے پر لے لے گی','Settings saved; the app picks them up next time it opens');
+$('q').oninput=()=>DATA&&paintPool();$('filter').onchange=()=>DATA&&paintPool();
+$('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on',s.id==='t-'+b.dataset.t));
+  if(b.dataset.t==='site'){const f=$('siteframe');if(!f.src)f.src=f.dataset.src;}};
+try{const k=sessionStorage.getItem('uzk');if(k){KEY=k;$('key').value=k;load();}}catch(e){}
+})();
+</script>
+
+<script src="uz-preferences.js"></script>
+</body>
+</html>
