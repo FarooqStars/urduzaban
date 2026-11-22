@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Qarina voice bridge — Wah Wah!</title>
+</head>
+<body style="margin:0;background:#0f1b2d;color:#f3eee3;font:14px sans-serif">
+<!-- واہ واہ! ایپ کی آواز کا پل (22 نومبر 2026، AI1):
+     ایپ اس صفحے کو چھپے ہوئے ویب ویو میں کھولتی ہے اور window.say("متن") بلاتی ہے۔
+     آواز قرینہ کی ہے (qarina-tts.js) — وہی جو اردو زبان کی سائٹ پر ہے، اسی لغت کے تلفظ کے ساتھ۔ -->
+<p id="s">Qarina…</p>
+<script type="module">
+const post = m => { try { window.WW && window.WW.postMessage(m); } catch (e) {} };
+let Q = null;
+try {
+  Q = await import('../qarina-tts/qarina-tts.js');
+  await Q.ready();
+  document.getElementById('s').textContent = 'ready';
+  post('ready');
+} catch (e) { post('error:' + e); }
+window.say = async (text) => {
+  if (!Q) { post('error:not-ready'); return; }
+  try { if (Q.isSpeaking()) Q.stop(); post('start'); await Q.speak(String(text || ''), { wpm: 140 }, { onend: () => post('end') }); post('end'); }
+  catch (e) { post('error:' + e); }
+};
+window.hush = () => { try { Q && Q.stop(); } catch (e) {} post('end'); };
+</script>
+</body>
+</html>
