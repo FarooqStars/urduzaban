@@ -44,7 +44,11 @@ if ($act === 'get') {
     $old = $DIR . '/lexicon.json';
     if (!is_file($LEX) && is_file($old)) { $o = json_decode(file_get_contents($old), true);
         if (is_array($o) && !empty($o['speak'])) @copy($old, $LEX); }
-    if (is_file($LEX)) readfile($LEX); else echo '{"speak":{},"updated":null}';
+    /* 22 Nov 2026 (AI1): خالی لغت کبھی [] نہ جائے — ہمیشہ {} (ورنہ admin میں پہلا لفظ محفوظ ہی نہیں ہوتا تھا) */
+    $l = is_file($LEX) ? json_decode(file_get_contents($LEX), true) : null;
+    if (!is_array($l)) $l = ['speak' => [], 'updated' => null];
+    $sp = (isset($l['speak']) && is_array($l['speak'])) ? $l['speak'] : [];
+    echo json_encode(['speak' => (object)$sp, 'updated' => $l['updated'] ?? null], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     exit;
 }
 
@@ -129,7 +133,7 @@ if ($act === 'save') {
         }
     }
     if (is_file($LEX)) @copy($LEX, $DIR.'/lexicon.live.prev.json');
-    $ok = writej($LEX, $out);
+    $ok = writej($LEX, ['speak' => (object)$out['speak'], 'updated' => $out['updated']]);
     /* جس لفظ کی درستی لغت میں آ گئی، اس کی درخواست خود صاف */
     $s = readj($SUG, ['items'=>[]]);
     $before = count($s['items'] ?? []);

@@ -164,8 +164,9 @@ $p = pool();
 
 if ($act === 'overview') {
     $c = ensure(dstr(dnum(today()) + 14));
+    /* سارے دن: گزرے، آج، اور آگے کے (مالک 22 نومبر: پورا ڈیٹا ایک جگہ) */
     $days = [];
-    for ($i = -1; $i <= 14; $i++) { $d = dstr(dnum(today()) + $i); $j = day_json($d); if ($j) $days[] = $j; }
+    foreach (array_keys(cal()) as $d) { $j = day_json($d); if ($j) $days[] = $j; }
     $stats = [];
     for ($m = 0; $m < 3; $m++) { $mk = date('Y-m', strtotime(date('Y-m-01') . " -$m month")); $stats += readj($DIR . "/stats/$mk.json", []); }
     krsort($stats);
