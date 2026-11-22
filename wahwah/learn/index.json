@@ -1,0 +1,282 @@
+{
+ "version": 1,
+ "note": "Wah Wah! learn packs (owner 22 Nov 2026). Served from urduzaban.com/wahwah/learn/ — new packs here appear in the app without an app update.",
+ "bands": {
+  "small": {
+   "ur": "ننھے منے",
+   "en": "Little ones",
+   "ages": "3–7",
+   "icon": "🧸"
+  },
+  "middle": {
+   "ur": "ہونہار",
+   "en": "Bright kids",
+   "ages": "7–12",
+   "icon": "🎒"
+  },
+  "big": {
+   "ur": "بڑے",
+   "en": "Grown-ups",
+   "ages": "12+",
+   "icon": "🎓"
+  }
+ },
+ "packs": [
+  {
+   "id": "pictures",
+   "kind": "pictures",
+   "bands": [
+    "small",
+    "middle",
+    "big"
+   ],
+   "ur": "یہ کیا ہے؟",
+   "en": "What is this?",
+   "icon": "🧠"
+  },
+  {
+   "id": "count",
+   "kind": "gen",
+   "gen": "count",
+   "bands": [
+    "small"
+   ],
+   "ur": "گنتی",
+   "en": "Counting",
+   "icon": "🔢"
+  },
+  {
+   "id": "math-small",
+   "kind": "gen",
+   "gen": "math",
+   "level": 1,
+   "bands": [
+    "small"
+   ],
+   "ur": "آسان حساب",
+   "en": "Easy sums",
+   "icon": "➕"
+  },
+  {
+   "id": "letters",
+   "kind": "gen",
+   "gen": "letter",
+   "bands": [
+    "small",
+    "middle"
+   ],
+   "ur": "حروفِ تہجی",
+   "en": "Urdu letters",
+   "icon": "ا"
+  },
+  {
+   "id": "english-words",
+   "kind": "gen",
+   "gen": "english",
+   "bands": [
+    "small",
+    "middle"
+   ],
+   "ur": "انگریزی الفاظ",
+   "en": "English words",
+   "icon": "🔤"
+  },
+  {
+   "id": "science-small",
+   "kind": "quiz",
+   "file": "science-small.json",
+   "bands": [
+    "small"
+   ],
+   "ur": "سائنس",
+   "en": "Science",
+   "icon": "🔬"
+  },
+  {
+   "id": "math-middle",
+   "kind": "gen",
+   "gen": "math",
+   "level": 2,
+   "bands": [
+    "middle"
+   ],
+   "ur": "حساب",
+   "en": "Maths",
+   "icon": "✖️"
+  },
+  {
+   "id": "urdu-spell",
+   "kind": "gen",
+   "gen": "spell",
+   "bands": [
+    "middle"
+   ],
+   "ur": "اردو ہجے",
+   "en": "Urdu spelling",
+   "icon": "✍️"
+  },
+  {
+   "id": "english-spell",
+   "kind": "gen",
+   "gen": "espell",
+   "bands": [
+    "middle",
+    "big"
+   ],
+   "ur": "انگریزی ہجے",
+   "en": "English spelling",
+   "icon": "🅰️"
+  },
+  {
+   "id": "urdu-opposites",
+   "kind": "pairs",
+   "file": "urdu-opposites.json",
+   "bands": [
+    "middle",
+    "big"
+   ],
+   "ur": "الٹ لفظ",
+   "en": "Urdu opposites",
+   "icon": "🔁",
+   "ask": "{w} کا الٹ کیا ہے؟",
+   "askEn": "Opposite of {w}?"
+  },
+  {
+   "id": "urdu-plurals",
+   "kind": "pairs",
+   "file": "urdu-plurals.json",
+   "bands": [
+    "middle",
+    "big"
+   ],
+   "ur": "واحد جمع",
+   "en": "Singular and plural",
+   "icon": "👥",
+   "ask": "{w} کی جمع کیا ہے؟",
+   "askEn": "Plural of {w}?"
+  },
+  {
+   "id": "english-opposites",
+   "kind": "pairs",
+   "file": "english-opposites.json",
+   "bands": [
+    "middle",
+    "big"
+   ],
+   "ur": "انگریزی الٹ",
+   "en": "English opposites",
+   "icon": "↔️",
+   "ask": "What is the opposite of {w}?",
+   "askEn": "What is the opposite of {w}?",
+   "latin": true
+  },
+  {
+   "id": "science-middle",
+   "kind": "quiz",
+   "file": "science-middle.json",
+   "bands": [
+    "middle"
+   ],
+   "ur": "سائنس",
+   "en": "Science",
+   "icon": "🔬"
+  },
+  {
+   "id": "math-big",
+   "kind": "gen",
+   "gen": "math",
+   "level": 3,
+   "bands": [
+    "big"
+   ],
+   "ur": "ریاضی",
+   "en": "Maths",
+   "icon": "📐"
+  },
+  {
+   "id": "urdu-synonyms",
+   "kind": "pairs",
+   "file": "urdu-synonyms.json",
+   "bands": [
+    "big"
+   ],
+   "ur": "ہم معنی الفاظ",
+   "en": "Urdu synonyms",
+   "icon": "🟰",
+   "ask": "{w} کا ہم معنی لفظ کون سا ہے؟",
+   "askEn": "Same meaning as {w}?"
+  },
+  {
+   "id": "science-big",
+   "kind": "quiz",
+   "file": "science-big.json",
+   "bands": [
+    "big"
+   ],
+   "ur": "سائنس اور معلومات",
+   "en": "Science and knowledge",
+   "icon": "🧪"
+  }
+ ],
+ "numbers": [
+  "صفر",
+  "ایک",
+  "دو",
+  "تین",
+  "چار",
+  "پانچ",
+  "چھ",
+  "سات",
+  "آٹھ",
+  "نو",
+  "دس",
+  "گیارہ",
+  "بارہ",
+  "تیرہ",
+  "چودہ",
+  "پندرہ",
+  "سولہ",
+  "سترہ",
+  "اٹھارہ",
+  "انیس",
+  "بیس"
+ ],
+ "letters": {
+  "ا": "الف",
+  "ب": "بے",
+  "پ": "پے",
+  "ت": "تے",
+  "ٹ": "ٹے",
+  "ث": "ثے",
+  "ج": "جیم",
+  "چ": "چے",
+  "ح": "بڑی حے",
+  "خ": "خے",
+  "د": "دال",
+  "ڈ": "ڈال",
+  "ذ": "ذال",
+  "ر": "رے",
+  "ڑ": "ڑے",
+  "ز": "زے",
+  "ژ": "ژے",
+  "س": "سین",
+  "ش": "شین",
+  "ص": "صواد",
+  "ض": "ضواد",
+  "ط": "طوئے",
+  "ظ": "ظوئے",
+  "ع": "عین",
+  "غ": "غین",
+  "ف": "فے",
+  "ق": "قاف",
+  "ک": "کاف",
+  "گ": "گاف",
+  "ل": "لام",
+  "م": "میم",
+  "ن": "نون",
+  "و": "واؤ",
+  "ہ": "چھوٹی ہے",
+  "ی": "چھوٹی یے",
+  "ے": "بڑی یے"
+ }
+}
