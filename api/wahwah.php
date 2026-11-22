@@ -67,8 +67,23 @@ function logline($what) {
 function kids() {
     global $DIR, $ROOT;
     $f = $DIR . '/kids.json';
+    $repo = readj($ROOT . '/wahwah/kids/kids.json', ['categories' => [], 'items' => []]);
     $k = readj($f, null);
-    if ($k === null) { $k = readj($ROOT . '/wahwah/kids/kids.json', ['categories' => [], 'items' => []]); writej($f, $k); }
+    if ($k === null) { writej($f, $repo); return $repo; }
+    /* 22 نومبر 2026: ریپو میں نیا ورژن آئے (مثلاً 1,137 تصویریں) تو نئی تصویریں شامل، پینل سے ہٹائی گئی تصویریں ہٹی ہی رہیں */
+    if ((int)($repo['version'] ?? 1) > (int)($k['version'] ?? 1)) {
+        $at = []; foreach ($k['items'] as $i => $it) $at[$it['id']] = $i;
+        foreach ($repo['items'] as $it) {
+            if (isset($at[$it['id']])) { $old = $k['items'][$at[$it['id']]]; $it['status'] = $old['status'] ?? 'ok'; $k['items'][$at[$it['id']]] = $it; }
+            else $k['items'][] = $it;
+        }
+        $cats = array_column($repo['categories'], 'id');
+        foreach ($k['items'] as $i => $it) if (!in_array($it['cat'], $cats, true)) $k['items'][$i]['cat'] = in_array('fruits', $cats, true) && $it['cat'] === 'fruitveg' ? 'fruits' : ($cats[0] ?? $it['cat']);
+        $k['categories'] = $repo['categories'];
+        $k['version'] = (int)$repo['version'];
+        writej($f, $k);
+        logline('kids: repo version ' . $k['version'] . ' merged, ' . count($k['items']) . ' items');
+    }
     return $k;
 }
 function active($items) { $o = []; foreach ($items as $i) if (($i['status'] ?? 'draft') !== 'no') $o[$i['id']] = $i; return $o; }
