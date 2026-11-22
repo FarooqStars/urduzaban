@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "voice": "Qarina neural (Piper, female) \u2014 UrduZaban",
+ "packs": [
+  {
+   "file": "pack-1.bin",
+   "v": 1,
+   "count": 607,
+   "bytes": 3419302
+  },
+  {
+   "file": "pack-2.bin",
+   "v": 1,
+   "count": 614,
+   "bytes": 3416846
+  },
+  {
+   "file": "pack-3.bin",
+   "v": 1,
+   "count": 613,
+   "bytes": 3416903
+  },
+  {
+   "file": "pack-4.bin",
+   "v": 1,
+   "count": 612,
+   "bytes": 3414123
+  },
+  {
+   "file": "pack-5.bin",
+   "v": 1,
+   "count": 595,
+   "bytes": 3353674
+  }
+ ]
+}
