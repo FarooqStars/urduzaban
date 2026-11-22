@@ -46,6 +46,7 @@ label{display:block;margin-top:8px;color:var(--muted);font-size:14px}
 .item{border-top:1px dashed var(--line);padding:6px 0}.item pre{white-space:pre-wrap;font-family:var(--naskh);margin:0;line-height:1.9}.item.gone{opacity:.5}
 .day.today{border:2px solid var(--accent)}.day.past{opacity:.85}.day h3 small{color:var(--muted);font-weight:400}
 .framebar{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.kcard{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}.kcard img{width:100%;height:120px;object-fit:cover;display:block;background:#eee}.kcard .sw{height:120px;display:flex;align-items:center;justify-content:center;font-size:44px;font-family:var(--latin-ui)}.kcard .kb{padding:6px 8px}.kcard .kb b{font-family:var(--naskh);font-size:20px}.kcard.gone{opacity:.4}.kcard small{display:block;color:var(--muted);font-size:11px;direction:ltr;text-align:left}
 iframe{width:100%;height:calc(100vh - 150px);min-height:600px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 .note{color:var(--muted);font-size:14px}
 .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:1000px){.three{grid-template-columns:1fr}}
@@ -69,6 +70,7 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:600px;border:1px solid v
   <button data-t="report" class="on">📊 <span class="L-ur">رپورٹ</span><span class="L-en">Report</span></button>
   <button data-t="days">📅 <span class="L-ur">سارا کیلنڈر (کل، آج، آگے)</span><span class="L-en">Full calendar (past, today, next)</span></button>
   <button data-t="pool">😂 <span class="L-ur">لطیفے اور پہیلیاں</span><span class="L-en">Jokes and riddles</span></button>
+  <button data-t="kids">🧒 <span class="L-ur">بچوں کا کونا (تصویریں)</span><span class="L-en">Kids corner (pictures)</span></button>
   <button data-t="app">⚙️ <span class="L-ur">ایپ کی ترتیبات</span><span class="L-en">App settings</span></button>
   <button data-t="frame" data-src="wahwah/index.html">📱 <span class="L-ur">ایپ کا صفحہ</span><span class="L-en">App page</span></button>
   <button data-t="frame" data-src="wahwah/privacy.html">🔒 <span class="L-ur">رازداری اور شرائط</span><span class="L-en">Privacy and terms</span></button>
@@ -94,6 +96,7 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:600px;border:1px solid v
 <div class="grid3"><div class="panel"><h3><span class="L-ur">فون</span><span class="L-en">Platform</span></h3><div id="split-p"></div></div>
 <div class="panel"><h3><span class="L-ur">ورژن</span><span class="L-en">Version</span></h3><div id="split-v"></div></div>
 <div class="panel"><h3><span class="L-ur">ایپ کی زبان</span><span class="L-en">App language</span></h3><div id="split-l"></div></div></div>
+<div class="panel"><h3><span class="L-ur">ہفتہ وار مقابلہ (ہر جمعہ کی بیت بازی)</span><span class="L-en">Weekly contest (Friday Bait Bazi)</span></h3><div id="weekly"></div></div>
 <div class="panel"><h3><span class="L-ur">آج، کل اور پرسوں</span><span class="L-en">Yesterday, today, tomorrow</span></h3><div id="three"></div></div>
 </div>
 
@@ -118,6 +121,18 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:600px;border:1px solid v
 <div id="pool"></div>
 </div>
 
+<div class="tab" id="t-kids">
+<div class="panel"><h3><span class="L-ur">نئی تصویر / لفظ</span><span class="L-en">New picture / word</span></h3>
+<p class="note"><span class="L-ur">تصویر کا پتہ وکی میڈیا کامنز کا ہو (مفت لائسنس)؛ بنانے والے کا نام اور لائسنس ضرور لکھیں۔ کسی کارڈ پر «بدلیں» دبائیں تو اس کی معلومات یہاں آ جائیں گی۔</span><span class="L-en">Use a Wikimedia Commons picture address (free licence) and always fill in the author and licence. Press “Edit” on a card to load it here.</span></p>
+<div class="grid2"><div><label>id</label><input id="k_id" dir="ltr" placeholder="(new)"><label><span class="L-ur">زمرہ</span><span class="L-en">Category</span></label><select id="k_cat"></select>
+<label><span class="L-ur">اردو لفظ</span><span class="L-en">Urdu word</span></label><input id="k_ur" dir="rtl"><label>English</label><input id="k_en" dir="ltr"></div>
+<div><label><span class="L-ur">تصویر کا پتہ</span><span class="L-en">Picture address</span></label><input id="k_img" dir="ltr" placeholder="https://upload.wikimedia.org/..."><label><span class="L-ur">کامنز کا صفحہ</span><span class="L-en">Commons page</span></label><input id="k_page" dir="ltr">
+<label><span class="L-ur">بنانے والا</span><span class="L-en">Author</span></label><input id="k_credit" dir="ltr"><label><span class="L-ur">لائسنس</span><span class="L-en">Licence</span></label><input id="k_license" dir="ltr" placeholder="CC BY-SA 4.0"></div></div>
+<button class="btn" id="k_save"><span class="L-ur">محفوظ کریں</span><span class="L-en">Save</span></button> <button class="mini" id="k_clear"><span class="L-ur">خالی کریں</span><span class="L-en">Clear</span></button></div>
+<div class="row"><select id="k_filter"></select></div>
+<div id="kidsgrid" class="kgrid"></div>
+</div>
+
 <div class="tab" id="t-app">
 <div class="panel">
 <h3><span class="L-ur">اسٹور کے لنک</span><span class="L-en">Store links</span></h3>
@@ -128,6 +143,10 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:600px;border:1px solid v
 <label><span class="L-ur">اردو</span><span class="L-en">Urdu</span></label><input id="notice_ur" dir="rtl">
 <label>English</label><input id="notice_en" dir="ltr">
 <label><span class="L-ur">کب تک (تاریخ)</span><span class="L-en">Until (date)</span></label><input id="notice_until" type="date" dir="ltr">
+<h3><span class="L-ur">اس ہفتے کا شاعر</span><span class="L-en">Poet of the week</span></h3>
+<p class="note"><span class="L-ur">چنا ہوا شاعر ایپ کے ہوم پر دکھے گا اور کھیلوں میں اس کے شعر زیادہ آئیں گے۔</span><span class="L-en">The chosen poet shows on the app home and comes up more often in the games.</span></p>
+<select id="poet_week"></select>
+<label><span class="L-ur">کب تک (تاریخ)</span><span class="L-en">Until (date)</span></label><input id="poet_until" type="date" dir="ltr">
 <button class="btn" id="savecfg"><span class="L-ur">محفوظ کریں</span><span class="L-en">Save</span></button>
 </div>
 </div>
@@ -178,6 +197,14 @@ function paintDays(){if(!DATA)return;const f=$('dfilter').value, pick=$('dpick')
 function labels(){const o=$('dfilter').options;[[T('آج کے آس پاس (7 دن آگے پیچھے)','Around today (±7 days)')],[T('گزرے دن','Past days')],[T('آنے والے دن','Coming days')],[T('سب دن','All days')]].forEach((t,i)=>o[i].text=t[0]);
   const p=$('filter').options;[T('سب','All'),T('لطیفے','Jokes'),T('پہیلیاں','Riddles'),T('ہٹائے گئے','Removed')].forEach((t,i)=>p[i].text=t);}
 labels();document.getElementById('langbtn').addEventListener('click',()=>setTimeout(()=>{labels();if(DATA)paintAll();},50));
+const POETS=[['','—'],['ghalib','مرزا غالب'],['iqbal','علامہ اقبال'],['mir','میر تقی میر'],['dagh','داغ دہلوی'],['zauq','ابراہیم ذوق'],['momin','مومن خان مومن'],['dard','خواجہ میر درد'],['sauda','مرزا رفیع سودا'],['atish','خواجہ حیدر علی آتش'],['hali','الطاف حسین حالی'],['akbar','اکبر الہ آبادی'],['nazir','نظیر اکبر آبادی'],['zafar','بہادر شاہ ظفر'],['amir','امیر مینائی'],['hasrat','حسرت موہانی']];
+$('poet_week').innerHTML=POETS.map(([k,n])=>'<option value="'+k+'">'+n+'</option>').join('');
+function paintKids(){if(!DATA||!DATA.kids)return;const K=DATA.kids;const cats=K.categories||[];
+  if(!$('k_cat').options.length){$('k_cat').innerHTML=cats.map(c=>'<option value="'+c.id+'">'+c.icon+' '+esc(c.ur)+'</option>').join('');$('k_filter').innerHTML='<option value="">'+T('سب زمرے','All categories')+'</option>'+cats.map(c=>'<option value="'+c.id+'">'+c.icon+' '+esc(T(c.ur,c.en))+'</option>').join('');}
+  const f=$('k_filter').value;const list=(K.items||[]).filter(i=>!f||i.cat===f);
+  $('kidsgrid').innerHTML=list.map(i=>'<div class="kcard '+(i.status==='no'?'gone':'')+'">'+(i.img?'<img loading="lazy" src="'+esc(i.img)+'">':(i.color?'<div class="sw" style="background:'+esc(i.color)+'"></div>':'<div class="sw">'+esc(i.en)+'</div>'))+
+   '<div class="kb"><b>'+esc(i.ur)+'</b> <span class="note" dir="ltr">'+esc(i.en)+'</span>'+(i.credit?'<small>'+esc(i.credit)+' · '+esc(i.license||'')+'</small>':'')+
+   '<button class="mini" data-ked="'+i.id+'">'+T('بدلیں','Edit')+'</button>'+(i.status==='no'?'<button class="mini" data-kon="'+i.id+'">'+T('واپس لائیں','Restore')+'</button>':'<button class="mini" data-koff="'+i.id+'">'+T('ہٹائیں','Remove')+'</button>')+'</div></div>').join('');}
 function paintAll(){
   const st=DATA.stats||{}; const days=Object.keys(st).sort().slice(-30);
   const sum=(k)=>{const o={};days.forEach(d=>{for(const[a,b]of Object.entries(st[d][k]||{}))o[a]=(o[a]||0)+b});return o};
@@ -189,8 +216,10 @@ function paintAll(){
   $('split-p').innerHTML=bar(sum('p'));$('split-v').innerHTML=bar(sum('v'));$('split-l').innerHTML=bar(sum('l'));
   const by={};DATA.days.forEach(d=>by[d.day]=d);
   $('three').innerHTML='<div class="three">'+[-1,0,1].map(n=>by[addDays(DATA.today,n)]?dayCard(by[addDays(DATA.today,n)]):'<div class="panel note">—</div>').join('')+'</div>';
-  paintDays(); paintPool();
-  const c=DATA.config||{};['store_play','store_apple','notice_ur','notice_en','notice_until'].forEach(k=>$(k).value=c[k]||'');
+  paintDays(); paintPool(); paintKids();
+  const W=DATA.weekly||{};const wk=Object.keys(W).sort().reverse().slice(0,8);
+  $('weekly').innerHTML=wk.map(k=>`<div class="sp"><span dir="ltr">${esc(k)}</span><b>${T('کھلاڑی','players')} ${W[k].n} · ${T('اوسط','avg')} ${(W[k].sum/Math.max(1,W[k].n)).toFixed(1)} · ${T('سب سے زیادہ','best')} ${W[k].max}</b><span></span></div>`).join('')||'<p class="note">'+T('ابھی کوئی مقابلہ نہیں ہوا۔','No contest yet.')+'</p>';
+  const c=DATA.config||{};['store_play','store_apple','notice_ur','notice_en','notice_until','poet_week','poet_until'].forEach(k=>$(k).value=c[k]||'');
   $('log').innerHTML=(DATA.log||[]).map(l=>`<div class="sp"><span dir="ltr">${esc(l.t)}</span><b dir="ltr">${esc(l.what)}</b><span></span></div>`).join('')||'—';
   Promise.all([fetch(API+'?action=health').then(r=>r.json()).catch(()=>null),fetch('api/lexicon.php?action=health').then(r=>r.json()).catch(()=>null)]).then(([w,l])=>{
     $('health').innerHTML=`<div class="sp"><span dir="ltr">wahwah.php</span><b>${w&&w.ok?'🟢':'🔴'} ${w?esc(w.store)+' · '+w.jokes+' / '+w.riddles+' · '+w.days+' days':''}</b><span></span></div><div class="sp"><span dir="ltr">lexicon.php</span><b>${l&&l.ok?'🟢':'🔴'} ${l?esc(l.store):''}</b><span></span></div>`;});
@@ -208,6 +237,9 @@ document.addEventListener('click',async e=>{const b=e.target.closest('button');i
     if(!DATA&&['report','days','pool','app','log'].includes(b.dataset.t))status('idle','پہلے بائیں طرف چابی لکھ کر «شروع کریں» دبائیں۔','First type the key on the left and press Start.');
     window.scrollTo({top:0,behavior:'smooth'});return;}
   if(b.dataset.rm){if(confirm(T('یہ کل سے کبھی نہیں دکھے گا۔ ہٹا دیں؟','It will never show from tomorrow. Remove?')))act({action:'remove',id:b.dataset.rm},'ہٹا دیا، کل سے کیلنڈر نیا بن گیا','Removed, calendar rebuilt from tomorrow');}
+  if(b.dataset.ked){const i=(DATA.kids.items||[]).find(x=>x.id===b.dataset.ked);if(i){['id','ur','en','img','page','credit','license'].forEach(k=>$('k_'+k).value=i[k]||'');$('k_cat').value=i.cat;window.scrollTo({top:0,behavior:'smooth'});}return;}
+  if(b.dataset.koff){if(confirm(T('یہ تصویر ایپ سے ہٹ جائے گی۔ ہٹا دیں؟','This picture will leave the app. Remove?')))act({action:'kids_remove',id:b.dataset.koff},'ہٹا دی','Removed');return;}
+  if(b.dataset.kon){act({action:'kids_remove',id:b.dataset.kon,restore:'1'},'واپس آ گئی','Restored');return;}
   if(b.dataset.rs)act({action:'restore',id:b.dataset.rs},'واپس آ گیا','Restored');
   if(b.dataset.ed){const[k,x]=findItem(b.dataset.ed);if(!k)return;
     if(k==='jokes'){const t=prompt(T('لطیفہ بدلیں','Edit the joke'),x.text);if(t&&t.trim())act({action:'edit',id:x.id,text:t},'بدل دیا','Changed');}
@@ -217,7 +249,10 @@ $('start').onclick=async()=>{KEY=$('key').value.trim();if(!KEY){status('bad','پ
 $('key').onkeydown=e=>{if(e.key==='Enter')$('start').click();};
 $('addjoke').onclick=()=>{const t=$('newjoke').value.trim();if(!t)return status('bad','لطیفہ خالی ہے۔','The joke is empty.');act({action:'add',type:'joke',text:t},'نیا لطیفہ آ گیا؛ کیلنڈر میں اگلی بار بنتے وقت شامل ہوگا','New joke added; it joins the calendar when it is next built').then(j=>{if(j)$('newjoke').value='';});};
 $('addriddle').onclick=()=>{const q=$('newq').value.trim(),a=$('newa').value.trim();if(!q||!a)return status('bad','پہیلی اور جواب دونوں لکھیں۔','Write both the riddle and the answer.');act({action:'add',type:'riddle',q,a,hint:$('newh').value.trim()},'نئی پہیلی آ گئی','New riddle added').then(j=>{if(j){$('newq').value='';$('newa').value='';$('newh').value='';}});};
-$('savecfg').onclick=()=>act({action:'config_save',store_play:$('store_play').value.trim(),store_apple:$('store_apple').value.trim(),notice_ur:$('notice_ur').value.trim(),notice_en:$('notice_en').value.trim(),notice_until:$('notice_until').value},'ترتیبات محفوظ؛ ایپ اگلی بار کھلنے پر لے لے گی','Settings saved; the app picks them up next time it opens');
+$('savecfg').onclick=()=>act({action:'config_save',store_play:$('store_play').value.trim(),store_apple:$('store_apple').value.trim(),notice_ur:$('notice_ur').value.trim(),notice_en:$('notice_en').value.trim(),notice_until:$('notice_until').value,poet_week:$('poet_week').value,poet_until:$('poet_until').value},'ترتیبات محفوظ؛ ایپ اگلی بار کھلنے پر لے لے گی','Settings saved; the app picks them up next time it opens');
+$('k_save').onclick=()=>{const p={action:'kids_save'};['id','cat','ur','en','img','page','credit','license'].forEach(k=>p[k]=$('k_'+k).value.trim());if(!p.ur)return status('bad','اردو لفظ لکھیں۔','Write the Urdu word.');if(p.img&&(!p.credit||!p.license))return status('bad','تصویر کے ساتھ بنانے والے کا نام اور لائسنس ضروری ہے۔','A picture needs its author and licence.');act(p,'محفوظ ہو گیا؛ ایپ اگلی بار کھلنے پر لے لے گی','Saved; the app picks it up next time it opens').then(j=>{if(j)$('k_clear').click();});};
+$('k_clear').onclick=()=>['id','ur','en','img','page','credit','license'].forEach(k=>$('k_'+k).value='');
+$('k_filter').onchange=paintKids;
 $('q').oninput=paintPool;$('filter').onchange=paintPool;$('dfilter').onchange=()=>{$('dpick').value='';paintDays();};$('dpick').onchange=paintDays;
 try{const k=sessionStorage.getItem('uzk')||localStorage.getItem('uz-admin-key');if(k){KEY=k;$('key').value=k;load();}}catch(e){}
 })();
