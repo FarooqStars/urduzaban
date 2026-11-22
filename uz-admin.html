@@ -246,7 +246,9 @@ function del(){ const el=taT||ta; let st=el.selectionStart??el.value.length, en=
 
 /* ---------- آواز (اپنی آواز + browser) ---------- */
 let QTTS=null, VOICES=[];
-(async()=>{ try{ const m=await import("./qarina-tts/qarina-tts.js"); if(await m.ready()){ QTTS=m; mkVoices(); } }catch(e){} })();
+(async()=>{ try{ const m=await import("./qarina-tts/qarina-tts.js"); if(await m.ready()){ QTTS=m; mkVoices();
+  /* 22 Nov 2026: قرینہ تیار ہو تو وہی آواز (خودکار والی میں کمپیوٹر کی عربی آواز اردو ٹھیک نہیں بولتی تھی) */
+  if(!localStorage.getItem("uz-voice-chosen")) $("vsel").value="__q__"; } }catch(e){} })();
 function lv(){ try{ VOICES=speechSynthesis.getVoices()||[]; }catch(e){ VOICES=[]; } mkVoices(); }
 if("speechSynthesis" in window){ lv(); speechSynthesis.onvoiceschanged=lv; }
 const vShort=n=>n.replace(/Microsoft |Google |Online \(Natural\)| - .*$|Desktop/g,"").trim();
@@ -266,6 +268,7 @@ function mkVoices(){
 document.addEventListener("change", e=>{
   if(e.target && e.target.id==="tjVoice" && $("vsel")) $("vsel").value=e.target.value;
   if(e.target && e.target.id==="vsel" && $("tjVoice")) $("tjVoice").value=e.target.value;
+  if(e.target && (e.target.id==="vsel"||e.target.id==="tjVoice")) try{ localStorage.setItem("uz-voice-chosen","1"); }catch(err){}
 });
 mkVoices();
 let alive=null;
@@ -377,7 +380,7 @@ document.addEventListener("pointerup",()=>{
 function setStat(m,ok){ const s=$("stat"); s.textContent=m; s.className=ok?"ok":"bad"; }
 async function load(){
   try{ const r=await fetch("api/lexicon.php?action=get&t="+Date.now());
-    const j=await r.json(); const sp=(j&&j.speak)||{};
+    const j=await r.json(); let sp=(j&&j.speak)||{}; if(Array.isArray(sp)) sp={};
     ta.value=Object.keys(sp).map(k=>k+" = "+sp[k]).join("\n");
     setStat(Object.keys(sp).length+" اندراج موجود", true);
   }catch(e){ setStat("database پڑھا نہ جا سکا — کیا api upload ہے؟", false); }
@@ -390,7 +393,8 @@ async function saveOne(word, form){
   if(!k||!v){ setStat("بولنے کا روپ خالی ہے", false); return false; }
   try{
     const g=await (await fetch("api/lexicon.php?action=get&t="+Date.now(),{cache:"no-store"})).json();
-    const sp=(g&&g.speak)||{}; sp[k]=v;
+    let sp=(g&&g.speak)||{}; if(Array.isArray(sp)) sp={};   /* خالی لغت [] آتی تھی — لفظ گم ہو جاتا تھا */
+    sp[k]=v;
     const body=new URLSearchParams();
     body.set("action","save"); body.set("key",KEYV()); body.set("data",JSON.stringify({speak:sp}));
     const j=await (await fetch("api/lexicon.php",{method:"POST",body})).json();
