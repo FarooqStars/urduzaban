@@ -8,8 +8,10 @@
          c=1 ہو تو صرف گنتی بڑھتی ہے (کون سا فون، کون سا ورژن) — کوئی آئی پی، نام یا شناخت محفوظ نہیں ہوتی
      GET ?action=config                                          → اسٹور کے لنک، اعلان
      GET ?action=health                                          → حالت (کوئی راز نہیں)
+     GET ?action=kids                                            → بچوں کا کونا: زمرے + تصویریں (22 نومبر)
+     GET ?action=score&g=weekly&s=N&wk=2026-W47                  → ہفتہ وار مقابلے کی گنتی (صرف اسکور، کوئی شناخت نہیں)
    انتظام (POST، وہی چابی جو uz-admin / lexicon.php کی ہے: uz-private/uz-config.php):
-     overview · remove · restore · edit · add · config_save · rebuild
+     overview · remove · restore · edit · add · config_save · rebuild · kids_save · kids_remove
 
    قاعدے: روز 5 لطیفے اور 1 پہیلی؛ کوئی چیز 30 دن سے پہلے دوبارہ نہیں آتی؛
           آج اور گزرے دن کبھی نہیں بدلتے (جو لوگ دیکھ چکے وہی رہے)، تبدیلی کل سے لاگو ہوتی ہے۔
@@ -61,6 +63,13 @@ function logline($what) {
     $f = $DIR . '/log.json'; $l = readj($f, []);
     $l[] = ['t' => date('Y-m-d H:i'), 'what' => $what];
     writej($f, array_slice($l, -300));
+}
+function kids() {
+    global $DIR, $ROOT;
+    $f = $DIR . '/kids.json';
+    $k = readj($f, null);
+    if ($k === null) { $k = readj($ROOT . '/wahwah/kids/kids.json', ['categories' => [], 'items' => []]); writej($f, $k); }
+    return $k;
 }
 function active($items) { $o = []; foreach ($items as $i) if (($i['status'] ?? 'draft') !== 'no') $o[$i['id']] = $i; return $o; }
 
@@ -142,7 +151,26 @@ if ($act === 'health') {
          'jokes' => count(active($p['jokes'])), 'riddles' => count(active($p['riddles'])), 'days' => count($c), 'config' => is_file($CFG)]);
 }
 if ($act === 'config') {
-    out(readj($DIR . '/config.json', ['store_play' => '', 'store_apple' => '', 'notice_ur' => '', 'notice_en' => '', 'notice_until' => '']) + ['ok' => true]);
+    out(readj($DIR . '/config.json', ['store_play' => '', 'store_apple' => '', 'notice_ur' => '', 'notice_en' => '', 'notice_until' => '', 'poet_week' => '', 'poet_until' => '']) + ['ok' => true]);
+}
+if ($act === 'kids') {
+    $k = kids();
+    $k['items'] = array_values(array_filter($k['items'], function ($i) { return ($i['status'] ?? 'ok') !== 'no'; }));
+    out($k + ['ok' => true]);
+}
+if ($act === 'score') {
+    $g = preg_replace('/[^a-z]/', '', (string)($_GET['g'] ?? ''));
+    $wk = preg_match('/^\d{4}-W\d{2}$/', $_GET['wk'] ?? '') ? $_GET['wk'] : '';
+    $sc = max(0, min(999, (int)($_GET['s'] ?? 0)));
+    if ($g !== 'weekly' || $wk === '') out(['ok' => false, 'err' => 'bad'], 400);
+    $f = $DIR . '/stats/weekly.json';
+    $h = fopen($f . '.lock', 'c'); if ($h) flock($h, LOCK_EX);
+    $w = readj($f, []);
+    $e = $w[$wk] ?? ['n' => 0, 'sum' => 0, 'max' => 0];
+    $e['n']++; $e['sum'] += $sc; $e['max'] = max($e['max'], $sc);
+    $w[$wk] = $e; writej($f, array_slice($w, -60, null, true));
+    if ($h) { flock($h, LOCK_UN); fclose($h); }
+    out(['ok' => true]);
 }
 if ($act === 'day') {
     $d = preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['d'] ?? '') ? $_GET['d'] : today();
@@ -172,7 +200,8 @@ if ($act === 'overview') {
     krsort($stats);
     $cl = cal(); $lastDay = $cl ? max(array_keys($cl)) : '';
     out(['ok' => true, 'today' => today(), 'days' => $days, 'pool' => $p, 'stats' => array_slice($stats, 0, 60, true),
-         'config' => readj($DIR . '/config.json', new stdClass()), 'log' => array_reverse(readj($DIR . '/log.json', [])), 'planned_until' => $lastDay]);
+         'config' => readj($DIR . '/config.json', new stdClass()), 'log' => array_reverse(readj($DIR . '/log.json', [])), 'planned_until' => $lastDay,
+         'kids' => kids(), 'weekly' => readj($DIR . '/stats/weekly.json', new stdClass())]);
 }
 $find = function ($id) use (&$p) {
     foreach (['jokes', 'riddles'] as $k) foreach ($p[$k] as $i => $it) if ($it['id'] === $id) return [$k, $i];
@@ -215,10 +244,37 @@ if ($act === 'rebuild') {
     logline('calendar rebuilt from ' . $tomorrow);
     out(['ok' => true]);
 }
+if ($act === 'kids_save') {
+    $k = kids();
+    $id = preg_replace('/[^a-z0-9\-]/', '', (string)($_POST['id'] ?? ''));
+    $cat = preg_replace('/[^a-z]/', '', (string)($_POST['cat'] ?? ''));
+    $cats = array_column($k['categories'], 'id');
+    if (!in_array($cat, $cats, true)) out(['ok' => false, 'err' => 'cat'], 400);
+    $item = ['cat' => $cat, 'ur' => clean($_POST['ur'] ?? '', 60), 'en' => clean($_POST['en'] ?? '', 60), 'status' => 'ok'];
+    if ($item['ur'] === '') out(['ok' => false, 'err' => 'empty'], 400);
+    foreach (['img', 'page'] as $f) { $u = clean($_POST[$f] ?? '', 500); if ($u !== '' && !preg_match('#^https://#', $u)) out(['ok' => false, 'err' => 'url'], 400); if ($u !== '') $item[$f] = $u; }
+    foreach (['credit', 'license', 'color'] as $f) if (clean($_POST[$f] ?? '') !== '') $item[$f] = clean($_POST[$f], 120);
+    $found = false;
+    foreach ($k['items'] as $i => $it) if ($it['id'] === $id) { $k['items'][$i] = array_merge($it, $item); $found = true; }
+    if (!$found) { $max = 0; foreach ($k['items'] as $it) if (strpos($it['id'], 'pic-') === 0) $max = max($max, (int)substr($it['id'], 4));
+        $id = 'pic-' . str_pad((string)($max + 1), 3, '0', STR_PAD_LEFT); $k['items'][] = ['id' => $id, 'key' => $id] + $item; }
+    writej($DIR . '/kids.json', $k);
+    logline(($found ? 'kids edited ' : 'kids added ') . $id);
+    out(['ok' => true, 'id' => $id]);
+}
+if ($act === 'kids_remove') {
+    $k = kids(); $id = (string)($_POST['id'] ?? ''); $on = ($_POST['restore'] ?? '') === '1';
+    foreach ($k['items'] as $i => $it) if ($it['id'] === $id) $k['items'][$i]['status'] = $on ? 'ok' : 'no';
+    writej($DIR . '/kids.json', $k);
+    logline(($on ? 'kids restored ' : 'kids removed ') . $id);
+    out(['ok' => true]);
+}
 if ($act === 'config_save') {
     $cfg = readj($DIR . '/config.json', []);
     foreach (['store_play', 'store_apple'] as $f) if (isset($_POST[$f])) { $u = clean($_POST[$f], 300); $cfg[$f] = preg_match('#^https://#', $u) ? $u : ''; }
     foreach (['notice_ur', 'notice_en'] as $f) if (isset($_POST[$f])) $cfg[$f] = clean($_POST[$f], 300);
+    if (isset($_POST['poet_week'])) $cfg['poet_week'] = preg_replace('/[^a-z]/', '', (string)$_POST['poet_week']);
+    if (isset($_POST['poet_until'])) $cfg['poet_until'] = preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['poet_until']) ? $_POST['poet_until'] : '';
     if (isset($_POST['notice_until'])) $cfg['notice_until'] = preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['notice_until']) ? $_POST['notice_until'] : '';
     $cfg['updated'] = date('Y-m-d H:i');
     writej($DIR . '/config.json', $cfg);
